@@ -126,23 +126,23 @@ MODEL_PLATFORMS:
     rerank_models: []
     speech2text_models: []
     text2speech_models: []
-  # - platform_name: ollama
-  #   platform_type: ollama
-  #   api_base_url: http://127.0.0.1:11434/v1
-  #   api_key: EMPTY
-  #   api_proxy: ''
-  #   api_concurrencies: 5
-  #   auto_detect_model: false
-  #   llm_models:
-  #     - glm-4-9b-chat
-  #     - qwen2:7b
-  #   embed_models:
-  #     - bge-large-zh
-  #   text2image_models: []
-  #   image2text_models: []
-  #   rerank_models: []
-  #   speech2text_models: []
-  #   text2speech_models: []
+  - platform_name: ollama
+    platform_type: ollama
+    api_base_url: http://127.0.0.1:11434/v1
+    api_key: EMPTY
+    api_proxy: ''
+    api_concurrencies: 5
+    auto_detect_model: false
+    llm_models:
+      - glm-4-9b-chat
+      - qwen2:7b
+    embed_models:
+      - bge-large-zh
+    text2image_models: []
+    image2text_models: []
+    rerank_models: []
+    speech2text_models: []
+    text2speech_models: []
   - platform_name: oneapi
     platform_type: oneapi
     api_base_url: http://127.0.0.1:3000/v1
