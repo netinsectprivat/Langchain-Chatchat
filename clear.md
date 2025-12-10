@@ -79,11 +79,6 @@ export CONDA_PKGS_DIRS=/root/autodl-tmp/conda_pkgs
 
 要不要我帮你写一个 **AutoDL 环境的一键初始化脚本**，自动完成缓存迁移、目录创建和清理，让你以后只需运行一次脚本就能稳定安装大模型依赖？
 
-
-
-
-
-
 下面是对数据的迁移: 你的系统盘已经彻底满了（98% 30G/30G），这会导致 pip/conda 安装、临时文件写入、甚至系统运行都频繁报错。解决思路是：**立刻释放空间 + 把缓存和大文件迁移到数据盘**。
 
 ---
@@ -91,23 +86,28 @@ export CONDA_PKGS_DIRS=/root/autodl-tmp/conda_pkgs
 ## 🧹 立即释放空间
 
 1. **清理 pip 缓存**
+
    ```bash
    pip cache purge
    ```
 2. **清理 conda 缓存**
+
    ```bash
    conda clean --all -y
    ```
 3. **删除无用环境**
+
    ```bash
    conda env list
    conda remove --name <env_name> --all
    ```
 4. **清理临时文件**
+
    ```bash
    rm -rf /tmp/*
    ```
 5. **检查大文件**
+
    ```bash
    du -sh /root/* | sort -h
    ```
@@ -160,8 +160,6 @@ source ~/.bashrc
 
 要不要我帮你写一个 **一键维护脚本**，自动完成清理和迁移，让你以后只需运行一次脚本就能保持系统盘空间稳定？
 
-
-
 你的系统盘已经彻底满了（98% 30G/30G），这会导致 pip/conda 安装、临时文件写入、甚至系统运行都频繁报错。解决思路是：**立刻释放空间 + 把缓存和大文件迁移到数据盘**。
 
 ---
@@ -169,23 +167,28 @@ source ~/.bashrc
 ## 🧹 立即释放空间
 
 1. **清理 pip 缓存**
+
    ```bash
    pip cache purge
    ```
 2. **清理 conda 缓存**
+
    ```bash
    conda clean --all -y
    ```
 3. **删除无用环境**
+
    ```bash
    conda env list
    conda remove --name <env_name> --all
    ```
 4. **清理临时文件**
+
    ```bash
    rm -rf /tmp/*
    ```
 5. **检查大文件**
+
    ```bash
    du -sh /root/* | sort -h
    ```
@@ -218,7 +221,80 @@ export TRANSFORMERS_CACHE=/root/autodl-tmp/transformers
 source ~/.bashrc
 ```
 
+
+
 ---
+
+清理缓存
+
+
+**一键清理脚本**，可以在任何环境下执行，自动清理 pip/conda/HuggingFace 缓存和系统日志，释放空间。你只需要保存为 `.sh` 文件并运行即可。
+
+```bash
+#!/bin/bash
+# 一键清理 pip/conda/HF 缓存和日志，释放空间
+
+echo "开始清理缓存和日志..."
+
+# 清理 pip 缓存（全局）
+echo "清理 pip 缓存..."
+pip cache purge
+
+# 清理 conda 缓存（全局）
+echo "清理 conda 缓存..."
+conda clean -a -y
+
+# 清理 HuggingFace 缓存
+echo "清理 HuggingFace 缓存..."
+rm -rf ~/.cache/huggingface
+rm -rf ~/.cache/torch
+rm -rf ~/.cache/pip
+
+# 如果你设置了缓存目录到数据盘，也清理它们
+echo "清理数据盘缓存目录..."
+rm -rf /root/autodl-tmp/huggingface/*
+rm -rf /root/autodl-tmp/transformers/*
+rm -rf /root/autodl-tmp/pip_cache/*
+rm -rf /root/autodl-tmp/tmp/*
+
+# 清理系统日志
+echo "清理系统日志..."
+rm -rf /var/log/*
+
+# 显示剩余空间
+echo "清理完成，当前磁盘使用情况："
+df -h | grep -E "/$|/root/autodl-tmp"
+
+echo "✅ 清理完成，可以继续安装 xinference[all]"
+```
+
+---
+
+### 使用方法
+
+1. 保存为 `clean_env.sh`：
+
+   ```bash
+   nano clean_env.sh
+   ```
+
+   粘贴上面的内容，保存退出。
+2. 给脚本执行权限：
+
+   ```bash
+   chmod +x clean_env.sh
+   ```
+3. 执行脚本：
+
+   ```bash
+   ./clean_env.sh
+   ```
+
+---
+
+✅ 这样你就能快速释放空间，保证 `/root/autodl-tmp` 和系统盘都有足够空间继续安装 `xinference[all]`。
+
+要不要我帮你扩展一下这个脚本，让它在清理前 **自动检测磁盘使用率**，超过 80% 才执行清理？这样就能避免不必要的删除。
 
 ## ⚙️ 长期维护策略
 
